@@ -1,5 +1,4 @@
-svgifier
-========
+# svgifier
 
 Библиотека для автоматической вставки в DOM иконок и изображений в формате SVG.
 Под капотом svgifier использует асинхронный код, Fetch API с кешированием SVG узлов
@@ -11,27 +10,25 @@ svgifier
 либо манипулирование DOM вообще отсутствует.
 
 
-Цель проекта
-------------
+## Цель проекта
 
 Библиотека создавалась как компактная автономная альтернатива таких проектов так:
 - [iconify.design](https://iconify.design) (для устаревшего варианта)
 - [SVGInject](https://github.com/iconfu/svg-inject)
 
 
-Установка и подключение
------------------------
+## Установка и подключение
 
 NPM:
 
 ```sh
-npm install git+https://github.com/h41ku/svgifier.git
+npm install svgifier
 ```
 
 Или PNPM:
 
 ```sh
-pnpm add git+https://github.com/h41ku/svgifier.git
+pnpm add svgifier
 ```
 
 Использование модуля:
@@ -52,8 +49,7 @@ import svgifier from '/path/to/svgifier.esm.min.js'
 <script src="/path/to/svgifier.umd.min.js"></script>
 ```
 
-Использование
--------------
+## Использование
 
 Плейсхолдер в HTML:
 
@@ -75,8 +71,7 @@ const observer = svgifier.observe() // возвращает объект Mutatio
 observer.disconnect() // при необходимости можно завершить отслеживание
 ```
 
-Описание API
-------------
+## Описание API
 
 ### Метод `svgifier.svgify(node, options)`
 
