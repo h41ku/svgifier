@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Пример использования svgifier</title>
+    <style>
+        html {
+            font-family: serif;
+            font-size: 18px;
+        }
+        body {
+            margin: 0;
+        }
+        section {
+            padding: 1rem 2rem;
+        }
+        .subtitle {
+            margin-top: 0;
+            margin-bottom: 1rem;
+            line-height: 1;
+            font-size: 2rem;
+        }
+        .example {
+            font-size: 1rem;
+            min-height: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+<section>
+    <h2 class="subtitle">Статические иконки</h2>
+    <div class="example">Не забывайте отдыхать: <i class="svgify" data-icon="lucide-lab:pac-man"></i></div>
+</section>
+<section>
+    <h2 class="subtitle">Динамические иконки</h2>
+    <div class="example">Не забывайте отдыхать: <span class="animal"></span></div>
+</section>
+<script type="module">
+import svgifier from 'https://unpkg.com/svgifier/dist/svgifier.esm.min.js'
+addEventListener('load', async () => {
+    const options = {
+        // функция обратного вызова для извлечения URL иконки для найденного плейсхолдера
+        getUrl: node => { // node - найденный плейсхолдер (является элементом DOM) 
+            // рассмотрим атрибут data-icon
+            const m = `${node.dataset.icon}`.match(/^([a-z0-9\-]+)\:([a-z0-9\-]+)$/)
+            return m // совпадает с шаблоном PROVIDER:ICON?
+                ? `./icons/${m[1]}/${m[2]}.svg` // строим ссылку вида /icons/PROVIDER/ICON.svg 
+                : node.dataset.src // путь отступления: считаем, что ссылка в атрибуте data-src
+        }
+    }
+    await svgifier.svgify(document.body, options) // заменить плейсхолдеры на иконки
+    // используйте обозреватель изменений DOM для автоматической
+    // замены плейсхолдеров на иконки всякий раз когда меняется DOM:
+    svgifier.observe(document.body, options)
+    // запустим пример динамических изменений
+    rotateIcons()
+})
+// пример динамических изменений
+function rotateIcons() {
+    const animalNode = document.querySelector('.animal')
+    let animalIndex = 0
+    const animalIcons = [ 'bear-face', 'owl', 'bee', 'frog-face', 'bull-head', 'fox-face-tail', 'crab' ]
+    const renderAnimal = iconName => {
+        animalNode.innerHTML = `<i class="svgify" data-icon="lucide-lab:${iconName}"></i>`
+    }
+    setInterval(() => { renderAnimal(animalIcons[++ animalIndex % animalIcons.length]) }, 1000)
+    renderAnimal(animalIcons[animalIndex])
+}
+</script>
+</body>
+</html>
