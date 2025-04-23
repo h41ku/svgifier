@@ -1,15 +1,13 @@
 {
     "name": "svgifier",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "author": "h41ku <h41ku.c0de@ya.ru>",
     "license": "MIT",
     "type": "module",
     "main": "src/svgifier.js",
     "types": "types/index.d.ts",
     "scripts": {
-        "build-esm": "webpack --config webpack.config.esm.bundle.js",
-        "build-umd": "webpack --config webpack.config.umd.bundle.js",
-        "build": "npm run build-esm && npm run build-umd"
+        "build": "webpack --config webpack.config.esm.bundle.js"
     },
     "devDependencies": {
         "webpack": "^5.75.0",
